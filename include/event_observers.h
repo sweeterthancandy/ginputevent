@@ -44,9 +44,6 @@ struct backspace_logger : event_observer{
                                 return .0;
                         return Deleted() * 100.0 / ( Total()  );
                 }
-                bool operator<(KeyStat const& that)const{
-                        return this->Percent() > that.Percent();
-                }
 
                 friend std::ostream& operator<<(std::ostream& ostr, KeyStat const& self){
                         ostr << "kept = " << self.kept;
@@ -97,7 +94,9 @@ struct backspace_logger : event_observer{
                 for( auto const& stat : stat_){
                         ordered.push_back( &stat.second );
                 }
-                std::sort(ordered.begin(), ordered.end(), [](auto l, auto r){ return l->Percent() > r->Percent(); });
+                std::sort(ordered.begin(), ordered.end(),
+                          [](auto l, auto r){ return l->Deleted() > r->Deleted();
+                });
 
 
                 std::vector< std::vector< std::string > > buffer;
