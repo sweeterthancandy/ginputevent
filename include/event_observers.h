@@ -59,6 +59,11 @@ struct backspace_logger : event_observer{
         }
 private:
         void emit(int key){
+                static StaticKeyboardCulture culture;
+                KeyDecl const* decl = culture.FromKey(key);
+                if(!! decl ){
+                        std::cout << "decl = " << *decl << "\n";
+                }
                 if( key == KEY_BACKSPACE ){
                         int key = 0;
                         if( history_.size() ){
@@ -82,6 +87,7 @@ private:
         // keep a history of literals pressed
         std::list<int> history_;
         std::map<int, size_t> stats_;
+        size_t total_keys_{0};
 };
 
 #endif // PRETTY_PRINTER_H
