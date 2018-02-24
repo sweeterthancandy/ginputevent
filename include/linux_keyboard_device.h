@@ -7,6 +7,7 @@
 #include <iostream>
 #include <linux/input.h>
 #include <linux/uinput.h>
+#include <linux/input-event-codes.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
