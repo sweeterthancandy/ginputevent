@@ -155,7 +155,7 @@ private:
                                 if( sptr ){
                                         sptr->start();
                                         for( auto ptr : obs_ ){
-                                                sptr->connect( [this,ptr](std::string const& dev, const struct input_event& ev){
+                                                sptr->connect( [ptr](std::string const& dev, const struct input_event& ev){
                                                         ptr->Accept(dev, ev);
                                                 });
                                         }

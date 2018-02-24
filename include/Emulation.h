@@ -37,6 +37,27 @@ struct Instruction{
         virtual void Execute(ExecutionContext& ctx)const=0;
 };
 
+struct MouseAbsInstr : Instruction{
+        explicit MouseAbsInstr(int x, int y):x_{x}, y_{y}{}
+        void Execute(ExecutionContext& ctx)const override{
+                ctx.Device()->emit( EV_ABS, ABS_X, x_);
+                ctx.Device()->emit( EV_ABS, ABS_Y, y_);
+        }
+private:
+        int x_;
+        int y_;
+};
+
+struct MouseRelInsr : Instruction{
+        explicit MouseRelInsr(int x, int y):x_{x}, y_{y}{}
+        void Execute(ExecutionContext& ctx)const override{
+                ctx.Device()->emit( EV_REL, REL_X, x_);
+                ctx.Device()->emit( EV_REL, REL_Y, y_);
+        }
+private:
+        int x_;
+        int y_;
+};
 
 struct LinuxKeyDownInstr : Instruction{
         explicit LinuxKeyDownInstr(KeyDecl const* key):key_{key}{}
@@ -125,6 +146,18 @@ namespace Frontend{
                 std::string c_;
         };
 
+        struct MouseRel{
+                MouseRel(int x_, int y_):x{x_}, y{y_}{}
+                int x;
+                int y;
+        };
+        
+        struct MouseAbs{
+                MouseAbs(int x_, int y_):x{x_}, y{y_}{}
+                int x;
+                int y;
+        };
+
         enum VectorType{
                 VectorType_Nested,
                 VectorType_Single,
@@ -155,23 +188,23 @@ namespace Frontend{
         Vector MakeNestedVector(Args&&... args){
                 Vector vec(VectorType_Nested);
                 int aux[] = { ( vec.Push(Key{args}), 0)... };
-                return std::move(vec);
+                return vec;
         }
         template<class... Args>
         Vector MakeVector(Args&&... args){
                 Vector vec(VectorType_Single);
                 int aux[] = { ( vec.Push(Key{args}), 0)... };
-                return std::move(vec);
+                return vec;
         }
         Vector MakeVectorFromLiteral(std::string const& lit){
                 Vector vec(VectorType_Single);
                 for( char c : lit ){
                         vec.Push(Key{std::string{c}});
                 }
-                return std::move(vec);
+                return vec;
         }
 
-        using Variant = boost::variant< Key, Vector, SleepMs >;
+        using Variant = boost::variant< Key, MouseRel, MouseAbs, Vector, SleepMs >;
 
 
         struct CompilerImpl{
@@ -218,6 +251,22 @@ namespace Frontend{
 
                         prog.Push(comp);
 
+                }
+                void operator()(MouseRel const& mouserel)const{
+                        auto comp = new CompositeInstr;
+
+                        comp->Push( new MouseRelInsr(mouserel.x, mouserel.y ));
+                        comp->Push( self_->sync_ );
+
+                        prog.Push(comp);
+                }
+                void operator()(MouseAbs const& mouseabs)const{
+                        auto comp = new CompositeInstr;
+
+                        comp->Push( new MouseAbsInstr(mouseabs.x, mouseabs.y ));
+                        comp->Push( self_->sync_ );
+
+                        prog.Push(comp);
                 }
                 void operator()(Vector const& vec)const{
                         

@@ -95,7 +95,7 @@ struct backspace_logger : event_observer{
                         ordered.push_back( &stat.second );
                 }
                 std::sort(ordered.begin(), ordered.end(),
-                          [](auto l, auto r){ return l->Deleted() > r->Deleted();
+                          [](auto l, auto r){ return l->Percent() > r->Percent();
                 });
 
 

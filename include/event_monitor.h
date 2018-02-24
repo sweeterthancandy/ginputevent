@@ -18,12 +18,13 @@ struct event_monitor : std::enable_shared_from_this<event_monitor>{
                 int fd = open(dev.c_str(), O_RDONLY);
                 if( fd < 0 )
                         return std::shared_ptr<event_monitor>{};
-                return std::make_shared<event_monitor>(io, fd);
+                return std::make_shared<event_monitor>(io, fd, dev);
         }
-        explicit event_monitor(boost::asio::io_service& io, int fd)
+        explicit event_monitor(boost::asio::io_service& io, int fd, std::string const& dev)
                 :io_(io)
                 ,work_(io) // keep alive
                 ,desc_(io)
+                ,dev_(dev)
         {
                 desc_.assign( fd );
         }

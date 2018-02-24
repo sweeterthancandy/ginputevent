@@ -100,5 +100,7 @@ private:
         int fd;
         int wd;
         fd_set descriptors;
-        struct timeval time_to_wait{{0}}; signal_t sig_; };
+        struct timeval time_to_wait{{0}};
+        signal_t sig_;
+};
 #endif // DIRECTORY_MONITOR_H
