@@ -31,11 +31,15 @@ struct linux_keyboard_device{
                  */
                 ioctl(fd_, UI_SET_EVBIT, EV_KEY);
                 ioctl(fd_, UI_SET_EVBIT, EV_MSC);
+                ioctl(fd_, UI_SET_EVBIT, EV_REL);
 
                 for(int i=0;i!=KEY_MAX;++i){
                         ioctl(fd_, UI_SET_KEYBIT, i);
                 }
                 ioctl(fd_, UI_SET_MSCBIT, MSC_SCAN );
+                        
+                ioctl(fd_, UI_SET_RELBIT, REL_X);
+                ioctl(fd_, UI_SET_RELBIT, REL_Y);
 
                 memset(&usetup, 0, sizeof(usetup));
                 usetup.id.bustype = BUS_USB;
