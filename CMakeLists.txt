@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.7)
 
-project(BlackBear)
+project(ginputevent)
 
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_CXX_FLAGS "-std=c++14")
@@ -19,18 +19,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-private-field")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-braced-scalar-init")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
 
-find_package(Boost REQUIRED  system filesystem COMPONENTS)
+find_package(Boost REQUIRED system filesystem COMPONENTS)
 
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories( include )
 
+
+
+aux_source_directory(src lib_src)
+add_library(ginput SHARED ${lib_src}) 
+target_link_libraries( ginput pthread ${Boost_LIBRARIES} )
+
 add_executable( linux_event_debugger app/linux_events.cpp)
-target_link_libraries( linux_event_debugger pthread ${Boost_LIBRARIES})
+target_link_libraries( linux_event_debugger ginput  pthread ${Boost_LIBRARIES})
 
 add_executable( TestMouse  app/TestMouse.cpp)
-target_link_libraries( TestMouse pthread ${Boost_LIBRARIES})
+target_link_libraries( TestMouse ginput pthread ${Boost_LIBRARIES})
 
 add_executable( TestKeyboard  app/TestKeyboard.cpp)
-target_link_libraries( TestKeyboard pthread ${Boost_LIBRARIES})
+target_link_libraries( TestKeyboard ginput pthread ${Boost_LIBRARIES})
 
 
