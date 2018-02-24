@@ -1,6 +1,10 @@
 #ifndef INCLUDE_KEYBOARDCULTURE_H
 #define INCLUDE_KEYBOARDCULTURE_H
 
+#include <map>
+#include <vector>
+#include <iostream>
+
 struct KeyDecl{
         explicit KeyDecl(std::string const& str, std::string const& literal, std::string const& key_str, int key, int msc, bool upper, bool lit)
                 :str_{str}, literal_{literal}, key_str_{key_str}, key_{key}, msc_{msc}, upper_{upper}, lit_{lit}
@@ -61,6 +65,9 @@ private:
         std::map<int, KeyDecl> from_key_;
         std::vector<KeyDecl> aux_;
 };
+
+#include <linux/input.h>
+#include <linux/uinput.h>
 
 struct StaticKeyboardCulture : KeyboardCulture{
         StaticKeyboardCulture(){
