@@ -3,6 +3,9 @@
 
 #include "linux_keyboard_device.h"
 
+#include <thread>
+#include <chrono>
+
 struct MouseAbsInstr : Instruction{
         explicit MouseAbsInstr(int x, int y):x_{x}, y_{y}{}
         void Execute(ExecutionContext& ctx)const override{
@@ -48,21 +51,12 @@ private:
 };
 
 struct TimeoutInstrMs : Instruction{
-        explicit TimeoutInstrMs(unsigned ms){
-                //ts_.tv_nsec = nano_sec;
-                #if 0
-                ts_.tv_sec  = ms / 1000;
-                ts_.tv_nsec = 1000000 * ( ms % 1000 );
-                #endif
-                ts_.tv_sec  = 1;
-        }
+        explicit TimeoutInstrMs(unsigned ms):ms_{ms}{}
         void Execute(ExecutionContext&)const override{
-                timespec out = {0};
-                nanosleep(&ts_, &out);
+                std::this_thread::sleep_for(std::chrono::milliseconds(ms_));
         }
 private:
-        struct timespec ts_ = {0};
-
+        unsigned ms_;
 };
 
 struct CompositeInstr : Instruction{
