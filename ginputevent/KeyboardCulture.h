@@ -4,6 +4,11 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <linux/input.h>
+#include <linux/uinput.h>
+
+namespace ginputevent{
+
 
 struct KeyDecl{
         explicit KeyDecl(std::string const& str, std::string const& literal, std::string const& key_str, int key, int msc, bool upper, bool lit)
@@ -66,8 +71,6 @@ private:
         std::vector<KeyDecl> aux_;
 };
 
-#include <linux/input.h>
-#include <linux/uinput.h>
 
 struct StaticKeyboardCulture : KeyboardCulture{
         StaticKeyboardCulture(){
@@ -77,5 +80,8 @@ struct StaticKeyboardCulture : KeyboardCulture{
                 #undef STATIC_KEY_DECL
         }
 };
+
+} // end namespace ginputevent
+
 
 #endif // INCLUDE_KEYBOARDCULTURE_H

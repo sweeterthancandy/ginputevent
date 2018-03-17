@@ -1,8 +1,11 @@
-#include "directory_monitor.h"
+#include "ginputevent/directory_monitor.h"
 
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/inotify.h>
+
+namespace ginputevent{
+
         
 directory_monitor::directory_monitor(boost::asio::io_service& io_, const std::string& dir)
                 :io_(io_)
@@ -65,3 +68,5 @@ void directory_monitor::start_read(){
                 }
         });
 }
+} // end namespace ginputevent
+

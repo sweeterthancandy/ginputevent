@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.7)
 
 project(ginputevent)
 
-set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_CXX_FLAGS "-std=c++14")
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb3")
@@ -22,7 +21,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
 find_package(Boost REQUIRED system filesystem COMPONENTS)
 
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories( include )
+include_directories( . )
 
 
 

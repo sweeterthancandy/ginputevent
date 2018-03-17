@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EVENT_MONITOR_H
+#define EVENT_MONITOR_H
 
 #include <boost/signals2/signal.hpp>
 
@@ -8,6 +9,8 @@
 	//__u16 code;
 	//__s32 value;
 //};
+
+namespace ginputevent{
 
 struct event_monitor : std::enable_shared_from_this<event_monitor>{
 
@@ -59,3 +62,7 @@ private:
 
         signal_t sig_;
 };
+
+} // end namespace ginputevent
+
+#endif // EVENT_MONITOR_H

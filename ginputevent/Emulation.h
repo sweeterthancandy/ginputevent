@@ -1,18 +1,10 @@
 #ifndef INCLUDE_EMULATION_H
 #define INCLUDE_EMULATION_H
-#if 0
-#include <string>
-#include <vector>
-#include <map>
-#include <iostream>
-#include <linux/input.h>
-#include <linux/uinput.h>
-#include <boost/variant.hpp>
-#include <regex>
-
-#endif
 
 #include "KeyboardCulture.h"
+
+namespace ginputevent{
+
 
 struct ExecutionContext;
 struct linux_keyboard_device;
@@ -47,8 +39,11 @@ private:
         std::vector<Instruction*> vec_;
 };
 
+} // end namespace ginputevent
+
 
 #include "EmulationFrontend.h"
+
 
 
 

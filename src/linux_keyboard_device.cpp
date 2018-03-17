@@ -1,4 +1,4 @@
-#include "linux_keyboard_device.h"
+#include "ginputevent/linux_keyboard_device.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -11,6 +11,8 @@
 #include <fcntl.h>
 #include <time.h>
 #include <boost/exception/all.hpp>
+
+namespace ginputevent{
 
         
 linux_keyboard_device::linux_keyboard_device(const std::string& name)
@@ -76,3 +78,5 @@ void linux_keyboard_device::emit(int type, int code, int value){
 
         write(fd_, &ie, sizeof(ie));
 }
+} // end namespace ginputevent
+

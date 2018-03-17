@@ -8,6 +8,9 @@
 
 #include "Emulation.h"
 
+namespace ginputevent{
+
+
 namespace Frontend{
 
         struct Key{
@@ -83,5 +86,7 @@ namespace Frontend{
 
 
 } // Frontend
+} // end namespace ginputevent
+
 
 #endif // INCLUDE_EMULATIONFRONTEND_H

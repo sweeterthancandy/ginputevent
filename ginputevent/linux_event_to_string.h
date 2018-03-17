@@ -1,4 +1,8 @@
-#pragma once
+#ifndef LINUX_EVENT_TO_STRING_H
+#define LINUX_EVENT_TO_STRING_H
+
+namespace ginputevent{
+
 
 // patch old headers
 #ifndef ABS_MT_TOOL_X
@@ -240,3 +244,6 @@ std::string input_event_to_string(struct input_event const& ev, colour_formatter
         }
         assert(0);
 }
+} // end namespace ginputevent
+
+#endif // LINUX_EVENT_TO_STRING_H

@@ -23,13 +23,14 @@
 #include <sys/types.h>
 #include <sys/inotify.h>
 
-#include "event_monitor.h"
+#include "ginputevent/event_monitor.h"
 
-#include "linux_event_to_string.h"
-#include "formatter_detail.h"
-#include "directory_monitor.h"
-#include "event_observers.h"
+#include "ginputevent/linux_event_to_string.h"
+#include "ginputevent/formatter_detail.h"
+#include "ginputevent/directory_monitor.h"
+#include "ginputevent/event_observers.h"
 
+using namespace ginputevent;
 
 namespace{
 
@@ -59,6 +60,7 @@ struct driver{
                                                 arg_iter += 2;
                                                 continue;
                                         }
+                                        // falltough
                                 case 1:
                                         if( arg == "--dont-create-existing"){
                                                 do_create_existing = false;

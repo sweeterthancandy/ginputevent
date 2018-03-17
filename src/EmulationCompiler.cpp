@@ -1,7 +1,8 @@
-#include "EmulationFrontend.h"
-#include "EmulationInstructions.h"
+#include "ginputevent/EmulationFrontend.h"
+#include "ginputevent/EmulationInstructions.h"
 #include <iostream>
 
+namespace ginputevent{
 namespace Frontend{
 namespace{
         struct CompilerImpl{
@@ -139,3 +140,5 @@ namespace Frontend{
         }
 
 } // Frontend
+} // end namespace ginputevent
+

@@ -1,6 +1,7 @@
-#include "Emulation.h"
+#include "ginputevent/Emulation.h"
 
 int main(){
+        using namespace ginputevent;
         for(;;){
                 StaticKeyboardCulture culture;
                 ExecutionContext eCtx;

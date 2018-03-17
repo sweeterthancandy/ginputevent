@@ -1,7 +1,10 @@
-#include "Emulation.h"
-#include "linux_keyboard_device.h"
+#include "ginputevent/Emulation.h"
+#include "ginputevent/linux_keyboard_device.h"
 #include <thread>
 #include <chrono>
+
+namespace ginputevent{
+
 
 ExecutionContext::ExecutionContext(){
         device_ = new linux_keyboard_device("linux-kbd");
@@ -11,3 +14,5 @@ void ExecutionContext::PostInstruction(){
                 std::this_thread::sleep_for( std::chrono::milliseconds(sleep_between_));
         }
 }
+} // end namespace ginputevent
+

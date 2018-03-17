@@ -6,6 +6,9 @@
 #include <thread>
 #include <chrono>
 
+namespace ginputevent{
+
+
 struct MouseAbsInstr : Instruction{
         explicit MouseAbsInstr(int x, int y):x_{x}, y_{y}{}
         void Execute(ExecutionContext& ctx)const override{
@@ -79,6 +82,8 @@ struct CtrlSyncInstr : Instruction{
         }
 
 };
+
+} // end namespace ginputevent
 
 
 

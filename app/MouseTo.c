@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <time.h>
 
+
 void emit(int fd, int type, int code, int val)
 {
    struct input_event ie;

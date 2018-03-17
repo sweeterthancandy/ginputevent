@@ -3,6 +3,9 @@
 
 #include "KeyboardCulture.h"
 
+namespace ginputevent{
+
+
 struct event_observer{
         virtual ~event_observer()=default;
         virtual void Accept(const std::string& dev, const struct input_event& ev)=0;
@@ -203,5 +206,8 @@ private:
         std::map<int, KeyStat> stat_;
         size_t total_keys_{0};
 };
+
+} // end namespace ginputevent
+
 
 #endif // PRETTY_PRINTER_H

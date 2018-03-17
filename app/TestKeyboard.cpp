@@ -1,6 +1,8 @@
-#include "Emulation.h"
+#include "ginputevent/Emulation.h"
+
 
 int main(){
+        using namespace ginputevent;
         StaticKeyboardCulture culture;
         ExecutionContext eCtx;
         eCtx.SleepBetweenMs(50);

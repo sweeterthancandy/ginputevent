@@ -7,6 +7,8 @@
 #include <boost/signals2/signal.hpp>
 #include <sys/inotify.h>
 
+namespace ginputevent{
+
 enum tag{
         tag_created,
         tag_deleted,
@@ -41,7 +43,9 @@ private:
         int fd;
         int wd;
         fd_set descriptors;
-        struct timeval time_to_wait{{0}};
+        struct timeval time_to_wait = {0};
         signal_t sig_;
 };
+
+} // end namespace ginputevent
 #endif // DIRECTORY_MONITOR_H
