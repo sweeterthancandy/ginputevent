@@ -21,8 +21,7 @@ struct event_monitor : std::enable_shared_from_this<event_monitor>{
                 return std::make_shared<event_monitor>(io, fd, dev);
         }
         explicit event_monitor(boost::asio::io_service& io, int fd, std::string const& dev)
-                :io_(io)
-                ,work_(io) // keep alive
+                :work_(io) // keep alive
                 ,desc_(io)
                 ,dev_(dev)
         {
@@ -53,7 +52,6 @@ private:
                 });
         }
 private:
-        boost::asio::io_service& io_;
         boost::asio::io_service::work work_;
         boost::asio::posix::stream_descriptor desc_;
         std::string dev_;
@@ -61,3 +59,6 @@ private:
 
         signal_t sig_;
 };
+
+
+

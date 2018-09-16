@@ -50,11 +50,12 @@ private:
 struct TimeoutInstrMs : Instruction{
         explicit TimeoutInstrMs(unsigned ms){
                 //ts_.tv_nsec = nano_sec;
-                #if 0
+                #if 1
                 ts_.tv_sec  = ms / 1000;
                 ts_.tv_nsec = 1000000 * ( ms % 1000 );
-                #endif
+                #else
                 ts_.tv_sec  = 1;
+                #endif
         }
         void Execute(ExecutionContext&)const override{
                 timespec out = {0};
