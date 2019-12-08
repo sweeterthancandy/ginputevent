@@ -27,7 +27,7 @@ namespace{
                 void operator()(Key const& key)const{
                         KeyDecl const* decl = self_->culture_->Map(key.Get());
                         if( decl == nullptr ){
-                                std::cerr << "Can't find mapping for " << key.Get() << "\n";
+                                std::cerr << "Can't find mapping for " << key << "\n";
                                 return;
                         }
                         auto comp = new CompositeInstr;

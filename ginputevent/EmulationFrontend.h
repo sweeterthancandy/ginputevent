@@ -3,8 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include <boost/variant.hpp>
+#include <boost/io/ios_state.hpp>
 
 #include "Emulation.h"
 
@@ -13,11 +15,59 @@ namespace ginputevent{
 
 namespace Frontend{
 
+        /*
+                 \a = \x07 = alert (bell)
+                 \b = \x08 = backspace
+                 \t = \x09 = horizonal tab
+                 \n = \x0A = newline (or line feed)
+                 \v = \x0B = vertical tab
+                 \f = \x0C = form feed
+                 \r = \x0D = carriage return
+                 \e = \x1B = escape (non-standard GCC extension)
+         */
         struct Key{
-                Key(std::string const& c):c_{c}{}
-                auto const& Get()const{ return c_; }
+                Key(std::string const& c):char_string_{c}{}
+                auto const& Get()const{ return char_string_; }
+                friend std::ostream& operator<<(std::ostream& ostr,         Key const& self){
+                        auto map_char = [](char c)->std::string{
+                                switch(c){
+                                        case '\a': return  "\\a";
+                                        case '\b': return  "\\b";
+                                        case '\t': return  "\\t";
+                                        case '\n': return  "\\n";
+                                        case '\v': return  "\\v";
+                                        case '\f': return  "\\f";
+                                        case '\r': return  "\\r";
+                                        case ' ': return  "<space>";
+                                        default:
+                                        if( std::isgraph(c) ){
+                                                return std::string{c};
+                                        } else {
+                                                return  "<nograph>";
+                                        }
+                                }
+                        };
+                        std::string escaped_str;
+                        for(char c : self.char_string_ ){
+                                escaped_str += map_char(c);
+                        }
+                        std::stringstream hex_ss;
+                        hex_ss << std::hex;
+                        for(size_t idx=0;idx!=self.char_string_.size();++idx){
+                                if( idx != 0 )
+                                        hex_ss << ",";
+                                hex_ss << "0x" << static_cast<int>(self.char_string_[idx]);
+                        }
+                        boost::io::ios_flags_saver ifs( ostr );
+                        ostr << "Key{" ;
+                        ostr << "len=" << self.char_string_.size();
+                        ostr << ", str=" << escaped_str;
+                        ostr << ", hex=" << hex_ss.str();
+                        ostr << "}";
+                        return ostr;
+                }
         private:
-                std::string c_;
+                std::string char_string_;
         };
 
         struct MouseRel{
