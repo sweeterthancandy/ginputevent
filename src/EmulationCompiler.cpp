@@ -113,6 +113,9 @@ namespace{
                 void operator()(SleepMs const& sms)const{
                         prog.Push( new TimeoutInstrMs(sms.Get()) );
                 }
+                void operator()(Function const& f)const{
+                        prog.Push( new FunctionInstr(f.get()));
+                }
                 mutable Program prog;
                 CompilerImpl const* self_;
 

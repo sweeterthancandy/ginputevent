@@ -83,6 +83,17 @@ struct CtrlSyncInstr : Instruction{
 
 };
 
+struct FunctionInstr : Instruction{
+        FunctionInstr(std::function<void()> f)
+                :f_(f)
+        {}
+        void Execute(ExecutionContext&)const override{
+                f_();
+        }
+private:
+        std::function<void()> f_;
+};
+
 } // end namespace ginputevent
 
 

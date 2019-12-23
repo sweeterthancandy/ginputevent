@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <functional>
 
 #include <boost/variant.hpp>
 #include <boost/io/ios_state.hpp>
@@ -129,7 +130,16 @@ namespace Frontend{
                 return vec;
         }
 
-        using Variant = boost::variant< Key, MouseRel, MouseAbs, Vector, SleepMs >;
+        struct Function{
+                Function(std::function<void()> f)
+                        :f_(f)
+                {}
+                auto const& get()const{ return f_; }
+        private:
+                std::function<void()> f_;
+        };
+
+        using Variant = boost::variant< Key, MouseRel, MouseAbs, Vector, SleepMs, Function >;
 
 
         Program Compile(KeyboardCulture const& culture, std::vector<Frontend::Variant> const& vec);
